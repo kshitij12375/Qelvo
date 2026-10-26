@@ -1,0 +1,31 @@
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: light --default, cupcake, dark, synthwave, retro, forest;
+}
+
+:root {
+  --navbar-height: 73px;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+@media (max-width: 720px) {
+  :root {
+    --navbar-height: 67px;
+  }
+}
+
+#root > [data-theme] {
+  min-height: 100vh;
+  min-height: 100dvh;
+  color: var(--color-base-content);
+  background: var(--color-base-100);
+}

@@ -1,0 +1,120 @@
+.chat-header {
+  min-height: 82px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1.25rem;
+  color: var(--color-base-content);
+  background: var(--color-base-100);
+  border-bottom: 2px solid var(--color-base-300);
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.chat-header-avatar {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  flex: 0 0 48px;
+  display: block;
+  overflow: hidden;
+  background: var(--color-base-200);
+  border: 2px solid var(--color-base-300);
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+.chat-header-avatar img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.chat-header-details {
+  min-width: 0;
+  flex: 1;
+}
+
+.chat-header-details h3 {
+  overflow: hidden;
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chat-header-status {
+  margin: 0.25rem 0 0;
+  color: color-mix(in srgb, var(--color-base-content) 60%, transparent);
+  font-size: 0.75rem;
+}
+
+.chat-header-status.is-online {
+  color: #16a34a;
+}
+
+.chat-header-close {
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  color: var(--color-base-content);
+  background: var(--color-base-100);
+  border: 2px solid var(--color-base-300);
+  border-radius: var(--radius-field, 6px);
+  cursor: pointer;
+  transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+.chat-header-close:hover {
+  background: var(--color-base-200);
+  border-color: var(--color-primary);
+}
+
+.chat-header-close:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.chat-header-close svg {
+  width: 20px;
+  height: 20px;
+}
+
+@media (max-width: 720px) {
+  .chat-header {
+    min-height: 72px;
+    padding: 0.7rem 0.85rem;
+  }
+
+  .chat-header-avatar {
+    width: 42px;
+    height: 42px;
+    flex-basis: 42px;
+  }
+
+  .chat-header-close {
+    width: 38px;
+    height: 38px;
+    flex-basis: 38px;
+  }
+
+  .chat-header-close svg {
+    display: none;
+  }
+
+  .chat-header-close::before {
+    width: 0.7rem;
+    height: 0.7rem;
+    content: "";
+    border-bottom: 2px solid currentColor;
+    border-left: 2px solid currentColor;
+    transform: translateX(2px) rotate(45deg);
+  }
+}

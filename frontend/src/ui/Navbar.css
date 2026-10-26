@@ -1,0 +1,144 @@
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  width: 100%;
+  color: var(--color-primary-content);
+  background: var(--color-primary);
+  border-bottom: 3px solid var(--color-base-300);
+  font-family: Arial, sans-serif;
+}
+
+.navbar-container {
+  width: 100%;
+  min-height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.25rem;
+  box-sizing: border-box;
+}
+
+@media (max-width: 720px) {
+  .navbar-container {
+    min-height: 64px;
+  }
+}
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  color: var(--color-primary-content);
+  font-size: 1.5rem;
+  font-weight: bold;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.navbar-links,
+.auth-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.nav-link,
+.chat-link,
+.logout-btn {
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1rem;
+  color: var(--color-base-content);
+  background: var(--color-base-100);
+  border: 2px solid var(--color-base-300);
+  border-radius: 4px;
+  box-shadow: 3px 3px 0 var(--color-base-300);
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: bold;
+  line-height: 1;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+.nav-link:hover,
+.chat-link:hover,
+.logout-btn:hover {
+  background: var(--color-secondary);
+}
+
+.chat-link {
+  width: 42px;
+  padding: 0;
+}
+
+.chat-link svg {
+  width: 20px;
+  height: 20px;
+}
+
+.logout-btn {
+  cursor: pointer;
+}
+
+@media (max-width: 500px) {
+  .navbar-container {
+    min-height: 64px;
+    padding: 0 0.75rem;
+  }
+
+  .navbar-links,
+  .auth-group {
+    gap: 0.4rem;
+  }
+
+  .nav-link,
+  .chat-link,
+  .logout-btn {
+    min-height: 38px;
+    padding: 0 0.6rem;
+    font-size: 0.8rem;
+  }
+
+  .chat-link {
+    width: 38px;
+    padding: 0;
+  }
+}
+
+@media (max-width: 380px) {
+  .navbar-container {
+    padding: 0 0.5rem;
+  }
+
+  .navbar-brand {
+    gap: 0.3rem;
+  }
+
+  .navbar-logo {
+    font-size: 1.25rem;
+  }
+
+  .navbar-links,
+  .auth-group {
+    gap: 0.25rem;
+  }
+
+  .nav-link,
+  .logout-btn {
+    padding: 0 0.4rem;
+    font-size: 0.75rem;
+  }
+
+  .chat-link {
+    width: 34px;
+  }
+}

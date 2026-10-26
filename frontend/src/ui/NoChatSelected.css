@@ -1,0 +1,46 @@
+.noChat {
+  min-height: calc(100vh - var(--navbar-height, 73px));
+  min-height: calc(100dvh - var(--navbar-height, 73px));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  color: var(--color-base-content);
+  background: var(--color-base-100);
+  font-family: Arial, sans-serif;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.noChat h1 {
+  margin: 0 0 0.75rem;
+  font-size: clamp(2rem, 5vw, 3rem);
+}
+
+.noChat svg {
+  width: 52px;
+  height: 52px;
+  margin-bottom: 1rem;
+  padding: 14px;
+  color: var(--color-primary-content);
+  background: var(--color-primary);
+  border: 2px solid var(--color-base-300);
+  border-radius: 50%;
+  box-sizing: content-box;
+}
+
+.noChat p {
+  max-width: 420px;
+  margin: 0;
+  color: var(--color-base-content);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 500px) {
+  .noChat {
+    min-height: calc(100dvh - var(--navbar-height, 67px));
+    padding: 1.5rem;
+  }
+}
