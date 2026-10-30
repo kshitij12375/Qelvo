@@ -32,17 +32,16 @@ const MessageInput = () => {
 
     const handleSendMessages = async (e) => {
         e.preventDefault();
-
         if (!text.trim() && !imagePreview) return;
 
-        await sendMessages({
-            text: text.trim(),
-            image: imagePreview
-        });
-
-        setText("");
-        setImagePreview(null);
-        if (fileInputRef.current) fileInputRef.current.value = "";
+        try {
+            await sendMessages({ text: text.trim(), image: imagePreview });
+            setText("");
+            setImagePreview(null);
+            if (fileInputRef.current) fileInputRef.current.value = "";
+        } catch {
+            // The chat store displays the request error.
+        }
     };
 
     return (
@@ -55,7 +54,6 @@ const MessageInput = () => {
                     </button>
                 </div>
             )}
-
             <form className="message-input-form" onSubmit={handleSendMessages}>
                 <input
                     className="message-input-text"
