@@ -1,49 +1,67 @@
-import {Server} from 'socket.io';
+import { Server } from 'socket.io';
 import http from 'http';
 import express from 'express';
+import jwt from 'jsonwebtoken';
 
 const app = express();
-const server=http.createServer(app);
+const server = http.createServer(app);
+const allowedOrigin = process.env.CLIENT_URL || "http://localhost:5173";
 
-const io =new Server(server,{
-    cors:{
-        origin:["http://localhost:5173"]
+const io = new Server(server, {
+    cors: {
+        origin: allowedOrigin,
+        credentials: true
     }
-}
+});
 
-)
+const userSocketMap = {};
 
-export function getRecieverSocketIds(userId){
+export function getRecieverSocketIds(userId) {
     return userSocketMap[userId] ?? new Set();
 }
 
+io.use((socket, next) => {
+    try {
+        const cookieHeader = socket.handshake.headers.cookie || "";
+        const tokenCookie = cookieHeader.split(";").map((cookie) => cookie.trim())
+            .find((cookie) => cookie.startsWith("jwt="));
 
-const userSocketMap={};
+        if (!tokenCookie) {
+            return next(new Error("Unauthorized"));
+        }
 
-io.on("connection",(socket)=>{
-    console.log("A user conneceted",socket.id);
+        const token = decodeURIComponent(tokenCookie.slice(4));
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    const userId=socket.handshake.query.userId;
+        if (!decoded.userId) {
+            return next(new Error("Unauthorized"));
+        }
 
-    if(userId){
-        userSocketMap[userId] ??= new Set();
-        userSocketMap[userId].add(socket.id);
+        socket.userId = decoded.userId;
+        next();
+    } catch {
+        next(new Error("Unauthorized"));
     }
+});
 
-    io.emit("getOnlineUsers",Object.keys(userSocketMap))
+io.on("connection", (socket) => {
+    const userId = socket.userId;
 
-    socket.on("disconnect", ()=>{
-        console.log("User is disconnected",socket.id);
-        const userSockets=userSocketMap[userId];
+    userSocketMap[userId] ??= new Set();
+    userSocketMap[userId].add(socket.id);
+
+    io.emit("getOnlineUsers", Object.keys(userSocketMap));
+
+    socket.on("disconnect", () => {
+        const userSockets = userSocketMap[userId];
         userSockets?.delete(socket.id);
-        if(userSockets?.size===0){
+
+        if (userSockets?.size === 0) {
             delete userSocketMap[userId];
         }
-        io.emit("getOnlineUsers",Object.keys(userSocketMap))
 
-    })
-})
+        io.emit("getOnlineUsers", Object.keys(userSocketMap));
+    });
+});
 
-
-
-export {app,io,server};
+export { app, io, server };
