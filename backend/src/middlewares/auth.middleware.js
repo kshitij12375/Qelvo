@@ -1,37 +1,29 @@
 import jwt from 'jsonwebtoken';
 import User from '../models/user.model.js';
 
-export const protectRoute=async (req,res,next)=>{
-
-
+export const protectRoute = async (req, res, next) => {
     try {
-    console.log("Cookies:", req.cookies);
-console.log("Token:", req.cookies?.jwt);
-    const token=req.cookies.jwt;
+        const token = req.cookies?.jwt;
 
-    if(!token){
-        return res.status(401).json({messaage:"Unauthorized "})
-    }
+        if (!token) {
+            return res.status(401).json({ message: "Unauthorized" });
+        }
 
-    const decoded=jwt.verify(token,process.env.JWT_SECRET);
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const user = await User.findById(decoded.userId).select("-password");
 
-    if(!decoded){
-        return res.status(401).json({messaage:"Invalid Token "})
-    }
+        if (!user) {
+            return res.status(401).json({ message: "User not found" });
+        }
 
-    const user=await User.findById(decoded.userId).select("-password");
-
-    if(!user){
-        return res.status(404).json({messaage:"User not found"})
-    }
-
-    req.user=user;
-
-    next();
-        
+        req.user = user;
+        next();
     } catch (error) {
-          console.log("Error in protected route middleware",error.message);
-         res.status(500).json({"message":"Internal Server error"});
-    }
+        if (error.name === "JsonWebTokenError" || error.name === "TokenExpiredError") {
+            return res.status(401).json({ message: "Invalid or expired token" });
+        }
 
-}
+        console.error("Error in protected route middleware:", error.message);
+        return res.status(500).json({ message: "Internal Server Error" });
+    }
+};
