@@ -4,7 +4,7 @@ import { Eye, EyeOff, Loader2 } from 'lucide-react';
 
 import '../ui/SignUpPage.css'
 import { Link } from 'react-router-dom';
-import toast from 'react-hot-toast';
+import {toast} from 'react-hot-toast';
 
 
 const SignUpPage = () => {

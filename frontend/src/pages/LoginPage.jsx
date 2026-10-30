@@ -13,7 +13,7 @@ const LoginPage = () => {
 
     const validateForm = () => {
 
-
+        
         if (!formData.email.trim()) return toast.error("Email is required");
         if (!/\S+@\S+\.\S+/.test(formData.email)) return toast.error("Email is invalid");
         if (formData.password.length < 6) return toast.error("Password must be at least 6 characters");
